@@ -30,24 +30,17 @@ public class MostrarDocumentoServlet extends HttpServlet {
         String titulo = req.getParameter("titulo");
         String contenido = req.getParameter("contenido");
         String tipo = req.getParameter("tipo");
+        
+        //1
+        //2.Realiza alguna tarea con los parametor
+        //3. devuelve una repuesta
 
-        if (tipo.equals("pdf")) {
-            resp.setContentType("application/pdf");
-            
-            ModoVisualizacionAdapter adapter= new PDFAdapter();
-            ByteArrayOutputStream baos= adapter.renderizar(titulo, contenido);
-            baos.writeTo(resp.getOutputStream());
-
-            resp.getOutputStream().flush();
-            
-        } else if (tipo.equals("html")) {
-            
-            ModoVisualizacionAdapter adapater= new HTMLAdapter();
-            ByteArrayOutputStream baos=adapater.renderizar(titulo, contenido);
-           
-            baos.writeTo(resp.getOutputStream());
-            resp.getOutputStream().flush();
-        }
+        GestorRenderizado gestor= new GestorRenderizado();
+        ByteArrayOutputStream baos= gestor.renderizar(titulo, contenido, tipo);
+        
+        baos.writeTo(resp.getOutputStream());
+        resp.getOutputStream().flush();
+        
     }
 
 }
